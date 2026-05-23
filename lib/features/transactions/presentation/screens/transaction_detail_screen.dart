@@ -120,7 +120,7 @@ class TransactionDetailScreen extends ConsumerWidget {
             (label: 'Type', value: isIncome ? 'Income' : 'Expense'),
             (label: 'Category', value: cat?.name ?? 'Uncategorized'),
             (label: 'Date', value: Formatters.dateTime(txn.date)),
-            (label: 'Payment method', value: txn.paymentMethod.label),
+            (label: 'Payment method',  value: txn.paymentMethod.toString()),
             if ((txn.notes ?? '').isNotEmpty)
               (label: 'Notes', value: txn.notes!),
           ]),
