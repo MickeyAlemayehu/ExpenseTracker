@@ -59,15 +59,6 @@ class SettingsController extends Notifier<void> {
         pinHash: enabled ? pinHash : null,
       ));
 
-  Future<void> setBiometric(bool enabled) =>
-      _repo.save(_current().copyWith(biometricEnabled: enabled));
-
-  Future<void> setNotifications(bool enabled) =>
-      _repo.save(_current().copyWith(notificationsEnabled: enabled));
-
-  Future<void> setDailyReminderHour(int hour) =>
-      _repo.save(_current().copyWith(dailyReminderHour: hour));
-
   Future<void> markOnboardingComplete() =>
       _repo.save(_current().copyWith(onboardingComplete: true));
 }

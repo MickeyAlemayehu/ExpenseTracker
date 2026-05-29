@@ -2,20 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
-/// Reusable on-screen PIN pad with optional biometric button.
+/// Reusable on-screen PIN pad.
 class PinPad extends StatelessWidget {
   const PinPad({
     required this.onDigit,
     required this.onBackspace,
-    this.onBiometric,
-    this.biometricIcon = Icons.fingerprint_rounded,
     super.key,
   });
 
   final ValueChanged<int> onDigit;
   final VoidCallback onBackspace;
-  final VoidCallback? onBiometric;
-  final IconData biometricIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +32,7 @@ class PinPad extends StatelessWidget {
         digit(1), digit(2), digit(3),
         digit(4), digit(5), digit(6),
         digit(7), digit(8), digit(9),
-        if (onBiometric != null)
-          _PinKey(icon: biometricIcon, onTap: onBiometric!)
-        else
-          const SizedBox.shrink(),
+        const SizedBox.shrink(),
         digit(0),
         _PinKey(
           icon: Icons.backspace_rounded,

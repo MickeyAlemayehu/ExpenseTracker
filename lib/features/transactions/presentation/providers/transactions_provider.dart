@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/repositories/transaction_repository_impl.dart';
 import '../../data/models/transaction_model.dart';
 import '../../domain/repositories/transaction_repository.dart';
 

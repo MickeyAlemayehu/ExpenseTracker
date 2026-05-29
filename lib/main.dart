@@ -21,7 +21,6 @@ import 'features/transactions/data/repositories/transaction_repository_impl.dart
 import 'features/transactions/domain/entities/payment_method.dart';
 import 'features/transactions/domain/entities/transaction_type.dart';
 import 'features/transactions/presentation/providers/transactions_provider.dart';
-import 'services/notification_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,9 +49,6 @@ Future<void> main() async {
 
   // 3. Seed default categories on first run.
   await categoryRepo.seedDefaultsIfEmpty();
-
-  // 4. Initialize service stubs (notifications, etc.)
-  await NotificationService.instance.init();
 
   runApp(
     ProviderScope(

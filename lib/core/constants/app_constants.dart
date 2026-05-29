@@ -10,9 +10,7 @@ class AppConstants {
   static const String prefsThemeMode = 'theme_mode';
   static const String prefsCurrencyCode = 'currency_code';
   static const String prefsAppLockEnabled = 'app_lock_enabled';
-  static const String prefsBiometricEnabled = 'biometric_enabled';
   static const String prefsPinHash = 'pin_hash';
-  static const String prefsLastBackup = 'last_backup_iso';
 
   // Defaults
   static const String defaultCurrencyCode = 'ETB';

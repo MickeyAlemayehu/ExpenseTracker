@@ -107,7 +107,7 @@ class DashboardScreen extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.go('/transactions/new'),
+        onPressed: () => context.push('/transactions/new'),
         icon: const Icon(Icons.add_rounded),
         label: const Text('Add'),
       ),
@@ -299,7 +299,7 @@ class _RecentTile extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: InkWell(
-        onTap: () => context.go('/transactions/${transaction.id}'),
+        onTap: () => context.push('/transactions/${transaction.id}'),
         borderRadius: BorderRadius.circular(14),
         child: Container(
           padding: const EdgeInsets.all(12),

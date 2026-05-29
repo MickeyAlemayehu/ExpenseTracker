@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/utils/date_utils.dart';
-import '../../../categories/data/models/category_model.dart';
 import '../../../categories/presentation/providers/categories_provider.dart';
 import '../../../dashboard/presentation/providers/dashboard_provider.dart';
 import '../../../transactions/domain/entities/transaction_type.dart';

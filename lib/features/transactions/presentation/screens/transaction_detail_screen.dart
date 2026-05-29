@@ -36,7 +36,7 @@ class TransactionDetailScreen extends ConsumerWidget {
         title: const Text('Transaction'),
         actions: [
           IconButton(
-            onPressed: () => context.go('/transactions/${txn.id}/edit'),
+            onPressed: () => context.push('/transactions/${txn.id}/edit'),
             icon: const Icon(Icons.edit_outlined),
           ),
           IconButton(
@@ -68,7 +68,11 @@ class TransactionDetailScreen extends ConsumerWidget {
                   .delete(txn.id);
               if (context.mounted) {
                 context.showSnack('Transaction deleted');
-                context.go('/transactions');
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.go('/transactions');
+                }
               }
             },
           ),

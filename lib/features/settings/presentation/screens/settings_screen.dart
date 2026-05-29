@@ -5,10 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/extensions.dart';
-import '../../../../services/backup_service.dart';
 import '../../../../services/export_service.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
-import '../../../budget/presentation/providers/budget_provider.dart';
 import '../../../categories/presentation/providers/categories_provider.dart';
 import '../../../transactions/presentation/providers/transactions_provider.dart';
 import '../providers/settings_provider.dart';
@@ -53,7 +51,7 @@ class SettingsScreen extends ConsumerWidget {
             value: s.appLockEnabled,
             onChanged: (v) async {
               if (v) {
-                context.go('/pin-setup');
+                context.push('/pin-setup');
               } else {
                 await ref.read(authControllerProvider.notifier).disableLock();
                 if (context.mounted) {
@@ -62,89 +60,27 @@ class SettingsScreen extends ConsumerWidget {
               }
             },
           ),
-          _SwitchTile(
-            icon: Icons.fingerprint_rounded,
-            label: 'Biometric unlock',
-            subtitle: 'Use fingerprint when available',
-            value: s.biometricEnabled,
-            onChanged: s.appLockEnabled
-                ? (v) =>
-                    ref.read(settingsControllerProvider.notifier).setBiometric(v)
-                : null,
-          ),
-          _Section(title: 'Notifications'),
-          _SwitchTile(
-            icon: Icons.notifications_rounded,
-            label: 'Notifications',
-            subtitle: 'Budget alerts & daily reminders',
-            value: s.notificationsEnabled,
-            onChanged: (v) => ref
-                .read(settingsControllerProvider.notifier)
-                .setNotifications(v),
-          ),
           _Section(title: 'Data'),
           _Tile(
             icon: Icons.file_download_rounded,
             label: 'Export transactions (CSV)',
-            onTap: () {
-              final csv = ExportService.instance.buildCsv(
-                transactions: ref.read(transactionsProvider),
-                categories: ref.read(categoriesProvider),
-                currencyCode: s.currencyCode,
-              );
-              showDialog<void>(
-                context: context,
-                builder: (_) => AlertDialog(
-                  title: const Text('CSV ready'),
-                  content: SizedBox(
-                    width: 400,
-                    child: SingleChildScrollView(
-                      child: SelectableText(
-                        csv.isEmpty ? 'No transactions to export.' : csv,
-                        style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
-                      ),
-                    ),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Close'),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-          _Tile(
-            icon: Icons.backup_rounded,
-            label: 'Backup data (JSON)',
-            onTap: () {
-              final json = BackupService.instance.exportToJson(
-                transactions: ref.read(transactionsProvider),
-                categories: ref.read(categoriesProvider),
-                budgets: ref.read(budgetsProvider),
-              );
-              showDialog<void>(
-                context: context,
-                builder: (_) => AlertDialog(
-                  title: const Text('Backup ready'),
-                  content: SizedBox(
-                    width: 400,
-                    child: SingleChildScrollView(
-                      child: SelectableText(
-                        json,
-                        style: const TextStyle(fontFamily: 'monospace', fontSize: 11),
-                      ),
-                    ),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Close'),
-                    ),
-                  ],
-                ),
-              );
+            onTap: () async {
+              final transactions = ref.read(transactionsProvider);
+              if (transactions.isEmpty) {
+                context.showSnack('No transactions to export.');
+                return;
+              }
+              try {
+                await ExportService.instance.shareCsv(
+                  transactions: transactions,
+                  categories: ref.read(categoriesProvider),
+                  currencyCode: s.currencyCode,
+                );
+              } catch (e) {
+                if (context.mounted) {
+                  context.showSnack('Export failed: $e');
+                }
+              }
             },
           ),
           _Section(title: 'About'),
@@ -228,14 +164,12 @@ class _Tile extends StatelessWidget {
   const _Tile({
     required this.icon,
     required this.label,
-    this.subtitle,
     this.trailingText,
     this.onTap,
   });
 
   final IconData icon;
   final String label;
-  final String? subtitle;
   final String? trailingText;
   final VoidCallback? onTap;
 
@@ -244,7 +178,6 @@ class _Tile extends StatelessWidget {
     return ListTile(
       leading: Icon(icon),
       title: Text(label),
-      subtitle: subtitle == null ? null : Text(subtitle!),
       trailing: trailingText == null
           ? const Icon(Icons.chevron_right_rounded)
           : Text(
@@ -264,12 +197,10 @@ class _SwitchTile extends StatelessWidget {
     required this.label,
     required this.value,
     required this.onChanged,
-    this.subtitle,
   });
 
   final IconData icon;
   final String label;
-  final String? subtitle;
   final bool value;
   final ValueChanged<bool>? onChanged;
 
@@ -278,7 +209,6 @@ class _SwitchTile extends StatelessWidget {
     return SwitchListTile.adaptive(
       secondary: Icon(icon),
       title: Text(label),
-      subtitle: subtitle == null ? null : Text(subtitle!),
       value: value,
       onChanged: onChanged,
     );
