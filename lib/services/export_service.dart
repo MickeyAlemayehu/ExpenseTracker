@@ -14,7 +14,6 @@ class ExportService {
   static final ExportService instance = ExportService._();
 
   static const List<String> _columns = [
-    'ID',
     'Date',
     'Title',
     'Type',
@@ -40,7 +39,6 @@ class ExportService {
     for (final t in transactions) {
       final cat = byId[t.categoryId]?.name ?? 'Uncategorized';
       final row = [
-        t.id,
         _isoDate(t.date),
         t.title,
         _typeLabel(t.type),
@@ -70,7 +68,9 @@ class ExportService {
     final stamp = _isoDate(DateTime.now());
     final filename = 'transactions_$stamp.csv';
     if (kDebugMode) {
-      debugPrint('[export] $filename — ${transactions.length} rows, ${csv.length} chars');
+      debugPrint(
+        '[export] $filename - ${transactions.length} rows, ${csv.length} chars',
+      );
     }
     await saveCsv(csv: csv, filename: filename);
   }
@@ -88,7 +88,10 @@ class ExportService {
   String _paymentLabel(PaymentMethod p) => p.label;
 
   String _csv(String s) {
-    if (s.contains(',') || s.contains('"') || s.contains('\n') || s.contains('\r')) {
+    if (s.contains(',') ||
+        s.contains('"') ||
+        s.contains('\n') ||
+        s.contains('\r')) {
       return '"${s.replaceAll('"', '""')}"';
     }
     return s;
