@@ -53,23 +53,11 @@ class SettingsController extends Notifier<void> {
     return _repo.save(_current().copyWith(themeMode: name));
   }
 
-  Future<void> setCurrency(String code) =>
-      _repo.save(_current().copyWith(currencyCode: code));
-
   Future<void> setAppLock({required bool enabled, String? pinHash}) =>
       _repo.save(_current().copyWith(
         appLockEnabled: enabled,
         pinHash: enabled ? pinHash : null,
       ));
-
-  Future<void> setBiometric(bool enabled) =>
-      _repo.save(_current().copyWith(biometricEnabled: enabled));
-
-  Future<void> setNotifications(bool enabled) =>
-      _repo.save(_current().copyWith(notificationsEnabled: enabled));
-
-  Future<void> setDailyReminderHour(int hour) =>
-      _repo.save(_current().copyWith(dailyReminderHour: hour));
 
   Future<void> markOnboardingComplete() =>
       _repo.save(_current().copyWith(onboardingComplete: true));

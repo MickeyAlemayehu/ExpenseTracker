@@ -45,7 +45,7 @@ class CategoriesScreen extends ConsumerWidget {
                 ],
               ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => context.go('/categories/new'),
+          onPressed: () => context.push('/categories/new'),
           icon: const Icon(Icons.add_rounded),
           label: const Text('Add'),
         ),
@@ -78,7 +78,7 @@ class _CategoryGrid extends ConsumerWidget {
       itemBuilder: (context, i) {
         final c = items[i];
         return InkWell(
-          onTap: () => context.go('/categories/${c.id}/edit'),
+          onTap: () => context.push('/categories/${c.id}/edit'),
           borderRadius: BorderRadius.circular(16),
           onLongPress: () async {
             if (c.isDefault) {

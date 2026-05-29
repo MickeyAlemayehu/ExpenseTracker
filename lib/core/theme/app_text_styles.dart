@@ -9,29 +9,42 @@ class AppTextStyles {
     final base = brightness == Brightness.light
         ? Typography.blackMountainView
         : Typography.whiteMountainView;
-    return GoogleFonts.interTextTheme(base).copyWith(
-      displayLarge: GoogleFonts.inter(
+    final inter = GoogleFonts.interTextTheme(base);
+    return inter.copyWith(
+      displayLarge: inter.displayLarge?.copyWith(
         fontSize: 32,
         fontWeight: FontWeight.w700,
         letterSpacing: -0.5,
       ),
-      headlineMedium: GoogleFonts.inter(
+      headlineMedium: inter.headlineMedium?.copyWith(
         fontSize: 24,
         fontWeight: FontWeight.w700,
         letterSpacing: -0.3,
       ),
-      titleLarge: GoogleFonts.inter(
+      titleLarge: inter.titleLarge?.copyWith(
         fontSize: 20,
         fontWeight: FontWeight.w600,
       ),
-      titleMedium: GoogleFonts.inter(
+      titleMedium: inter.titleMedium?.copyWith(
         fontSize: 16,
         fontWeight: FontWeight.w600,
       ),
-      bodyLarge: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w400),
-      bodyMedium: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400),
-      bodySmall: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w400),
-      labelLarge: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600),
+      bodyLarge: inter.bodyLarge?.copyWith(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      ),
+      bodyMedium: inter.bodyMedium?.copyWith(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+      ),
+      bodySmall: inter.bodySmall?.copyWith(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+      ),
+      labelLarge: inter.labelLarge?.copyWith(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 }

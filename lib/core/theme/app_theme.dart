@@ -45,7 +45,7 @@ class AppTheme {
             : SystemUiOverlayStyle.light,
         titleTextStyle: AppTextStyles.textTheme(brightness).titleLarge,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: colorScheme.surface,
         elevation: 0,
         margin: EdgeInsets.zero,

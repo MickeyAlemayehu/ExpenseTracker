@@ -45,7 +45,7 @@ class BudgetsScreen extends ConsumerWidget {
                   color: cat == null ? AppColors.primary : Color(cat.colorValue),
                   currencyCode: code,
                   onTap: () =>
-                      context.go('/budgets/${u.budget.id}/edit'),
+                      context.push('/budgets/${u.budget.id}/edit'),
                   onDelete: () async {
                     final ok = await showDialog<bool>(
                       context: context,
@@ -81,7 +81,7 @@ class BudgetsScreen extends ConsumerWidget {
               itemCount: usages.length,
             ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.go('/budgets/new'),
+        onPressed: () => context.push('/budgets/new'),
         icon: const Icon(Icons.add_rounded),
         label: const Text('New budget'),
       ),

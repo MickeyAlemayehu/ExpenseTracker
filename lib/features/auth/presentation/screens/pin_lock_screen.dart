@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../services/biometric_service.dart';
-import '../../../settings/presentation/providers/settings_provider.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/pin_pad.dart';
 
@@ -29,17 +27,6 @@ class _PinLockScreenState extends ConsumerState<PinLockScreen> {
         if (mounted) context.go('/pin-setup');
       });
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) => _tryBiometric());
-  }
-
-  Future<void> _tryBiometric() async {
-    if (!mounted) return;
-    final s = ref.read(settingsProvider);
-    if (!s.biometricEnabled) return;
-    final ok = await BiometricService.instance.authenticate();
-    if (!mounted || !ok) return;
-    ref.read(authControllerProvider.notifier).unlockFromBiometric();
-    context.go('/home');
   }
 
   void _onDigit(int d) {
@@ -72,7 +59,6 @@ class _PinLockScreenState extends ConsumerState<PinLockScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final biometricEnabled = ref.watch(settingsProvider).biometricEnabled;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -103,7 +89,6 @@ class _PinLockScreenState extends ConsumerState<PinLockScreen> {
             PinPad(
               onDigit: _onDigit,
               onBackspace: _onBackspace,
-              onBiometric: biometricEnabled ? _tryBiometric : null,
             ),
             const SizedBox(height: 24),
           ],

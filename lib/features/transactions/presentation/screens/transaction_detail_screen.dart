@@ -36,7 +36,7 @@ class TransactionDetailScreen extends ConsumerWidget {
         title: const Text('Transaction'),
         actions: [
           IconButton(
-            onPressed: () => context.go('/transactions/${txn.id}/edit'),
+            onPressed: () => context.push('/transactions/${txn.id}/edit'),
             icon: const Icon(Icons.edit_outlined),
           ),
           IconButton(
@@ -68,7 +68,11 @@ class TransactionDetailScreen extends ConsumerWidget {
                   .delete(txn.id);
               if (context.mounted) {
                 context.showSnack('Transaction deleted');
-                context.go('/transactions');
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.go('/transactions');
+                }
               }
             },
           ),
@@ -120,7 +124,7 @@ class TransactionDetailScreen extends ConsumerWidget {
             (label: 'Type', value: isIncome ? 'Income' : 'Expense'),
             (label: 'Category', value: cat?.name ?? 'Uncategorized'),
             (label: 'Date', value: Formatters.dateTime(txn.date)),
-            (label: 'Payment method', value: txn.paymentMethod.label),
+            (label: 'Payment method',  value: txn.paymentMethod.toString()),
             if ((txn.notes ?? '').isNotEmpty)
               (label: 'Notes', value: txn.notes!),
           ]),

@@ -51,7 +51,11 @@ class _PinSetupScreenState extends ConsumerState<PinSetupScreen> {
       await ref.read(authControllerProvider.notifier).setPin(_entry);
       if (!mounted) return;
       context.showSnack('App lock enabled');
-      context.go('/home');
+      if (context.canPop()) {
+        context.pop();
+      } else {
+        context.go('/home');
+      }
     } else {
       setState(() {
         _error = "PINs don't match — try again";

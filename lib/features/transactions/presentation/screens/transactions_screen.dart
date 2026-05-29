@@ -134,7 +134,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
                               category: categoriesById[txns[idx].categoryId],
                               currencyCode: code,
                               onTap: () =>
-                                  context.go('/transactions/${txns[idx].id}'),
+                                  context.push('/transactions/${txns[idx].id}'),
                             ),
                         ],
                       );
@@ -144,7 +144,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.go('/transactions/new'),
+        onPressed: () => context.push('/transactions/new'),
         icon: const Icon(Icons.add_rounded),
         label: const Text('Add'),
       ),

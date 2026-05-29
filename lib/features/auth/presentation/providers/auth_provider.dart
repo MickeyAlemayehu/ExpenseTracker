@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../settings/presentation/providers/settings_provider.dart';
 
-/// Auth state for the local PIN + biometric flow.
+/// Auth state for the local PIN flow.
 enum AuthStatus { unknown, needsSetup, locked, unlocked }
 
 class AuthState {
@@ -56,11 +56,6 @@ class AuthController extends Notifier<AuthState> {
     await ref
         .read(settingsControllerProvider.notifier)
         .setAppLock(enabled: false);
-    state = const AuthState(status: AuthStatus.unlocked);
-  }
-
-  void unlockFromBiometric() {
-    _sessionUnlocked = true;
     state = const AuthState(status: AuthStatus.unlocked);
   }
 
