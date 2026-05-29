@@ -53,9 +53,6 @@ class SettingsController extends Notifier<void> {
     return _repo.save(_current().copyWith(themeMode: name));
   }
 
-  Future<void> setCurrency(String code) =>
-      _repo.save(_current().copyWith(currencyCode: code));
-
   Future<void> setAppLock({required bool enabled, String? pinHash}) =>
       _repo.save(_current().copyWith(
         appLockEnabled: enabled,

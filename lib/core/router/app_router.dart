@@ -13,7 +13,6 @@ import '../../features/categories/presentation/screens/categories_screen.dart';
 import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/settings/presentation/providers/settings_provider.dart';
-import '../../features/settings/presentation/screens/currency_picker_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/splash/presentation/screens/splash_screen.dart';
 import '../../features/transactions/presentation/screens/add_edit_transaction_screen.dart';
@@ -112,11 +111,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (_, state) => AddEditBudgetScreen(
           budgetId: state.pathParameters['id'],
         ),
-      ),
-      GoRoute(
-        path: '/settings/currency',
-        parentNavigatorKey: _rootKey,
-        builder: (_, __) => const CurrencyPickerScreen(),
       ),
 
       StatefulShellRoute.indexedStack(

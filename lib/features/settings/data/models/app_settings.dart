@@ -28,7 +28,7 @@ class AppSettings extends HiveObject {
   bool onboardingComplete;
 
   factory AppSettings.defaults() => AppSettings(
-        currencyCode: 'USD',
+        currencyCode: 'ETB',
         themeMode: 'system',
         appLockEnabled: false,
         biometricEnabled: false,
@@ -69,7 +69,7 @@ class AppSettingsAdapter extends TypeAdapter<AppSettings> {
       for (var i = 0; i < reader.readByte(); i++) reader.readByte(): reader.read(),
     };
     return AppSettings(
-      currencyCode: (fields[0] as String?) ?? 'USD',
+      currencyCode: (fields[0] as String?) ?? 'ETB',
       themeMode: (fields[1] as String?) ?? 'system',
       appLockEnabled: (fields[2] as bool?) ?? false,
       biometricEnabled: (fields[3] as bool?) ?? false,

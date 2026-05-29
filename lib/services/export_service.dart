@@ -15,7 +15,7 @@ class ExportService {
   String buildCsv({
     required List<TransactionModel> transactions,
     required List<CategoryModel> categories,
-    String currencyCode = 'USD',
+    String currencyCode = 'ETB',
   }) {
     final byId = {for (final c in categories) c.id: c};
     final buf = StringBuffer()

@@ -45,7 +45,6 @@ class SettingsScreen extends ConsumerWidget {
             icon: Icons.attach_money_rounded,
             label: 'Currency',
             trailingText: '${currency.symbol}  ${currency.code}',
-            onTap: () => context.go('/settings/currency'),
           ),
           _Section(title: 'Security'),
           _SwitchTile(
